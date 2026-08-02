@@ -44,6 +44,77 @@
         border: none;
       }
 
+      .avatar-wrap {
+        position: relative;
+      }
+
+      .avatar-trigger {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.65rem;
+        padding: 0.4rem 0.7rem;
+        border-radius: 999px;
+        background: rgba(91, 92, 246, 0.1);
+        border: 1px solid rgba(91, 92, 246, 0.14);
+        color: var(--primary);
+        cursor: pointer;
+        min-width: 150px;
+      }
+
+      .avatar-badge {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      .avatar-menu {
+        position: absolute;
+        top: calc(100% + 0.5rem);
+        right: 0;
+        min-width: 190px;
+        background: #fff;
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        border-radius: 1rem;
+        box-shadow: 0 14px 36px rgba(15, 23, 42, 0.12);
+        padding: 0.6rem;
+        display: none;
+        z-index: 1200;
+        max-height: 180px;
+        overflow-y: auto;
+      }
+
+      .avatar-menu.show {
+        display: block;
+      }
+
+      .avatar-menu .menu-name {
+        font-weight: 700;
+        padding: 0.4rem 0.5rem 0.65rem;
+        border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+        margin-bottom: 0.4rem;
+      }
+
+      .avatar-menu button {
+        width: 100%;
+        text-align: left;
+        border: none;
+        background: transparent;
+        color: #dc2626;
+        padding: 0.55rem 0.5rem;
+        border-radius: 0.65rem;
+        font-weight: 600;
+      }
+
+      .avatar-menu button:hover {
+        background: rgba(220, 38, 38, 0.08);
+      }
+
       .footer {
         background: #0f172a;
         color: #cbd5e1;
@@ -59,6 +130,86 @@
         place-items: center;
         font-size: 1.5rem;
         font-weight: 700;
+        overflow: hidden;
+      }
+
+      .avatar-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+      }
+
+      .avatar-wrap {
+        position: relative;
+      }
+
+      .avatar-trigger {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.65rem;
+        padding: 0.4rem 0.7rem;
+        border-radius: 999px;
+        background: rgba(91, 92, 246, 0.1);
+        border: 1px solid rgba(91, 92, 246, 0.14);
+        color: var(--primary);
+        cursor: pointer;
+        min-width: 150px;
+      }
+
+      .avatar-badge {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      .avatar-menu {
+        position: absolute;
+        top: calc(100% + 0.5rem);
+        right: 0;
+        min-width: 190px;
+        background: #fff;
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        border-radius: 1rem;
+        box-shadow: 0 14px 36px rgba(15, 23, 42, 0.12);
+        padding: 0.6rem;
+        display: none;
+        z-index: 1200;
+        max-height: 180px;
+        overflow-y: auto;
+      }
+
+      .avatar-menu.show {
+        display: block;
+      }
+
+      .avatar-menu .menu-name {
+        font-weight: 700;
+        padding: 0.4rem 0.5rem 0.65rem;
+        border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+        margin-bottom: 0.4rem;
+      }
+
+      .avatar-menu button {
+        width: 100%;
+        text-align: left;
+        border: none;
+        background: transparent;
+        color: #dc2626;
+        padding: 0.55rem 0.5rem;
+        border-radius: 0.65rem;
+        font-weight: 600;
+      }
+
+      .avatar-menu button:hover {
+        background: rgba(220, 38, 38, 0.08);
       }
     </style>
   </head>
@@ -82,9 +233,19 @@
             <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
             <li class="nav-item"><a class="nav-link" href="cart.html">Cart</a></li>
             <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-            <li class="nav-item"><a class="nav-link active" href="profile.html">Profile</a></li>
-            <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
-            <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
+            <li class="nav-item"><a class="nav-link active" href="./profile.html">Profile</a></li>
+            <li class="nav-item"><a class="nav-link" href="./login.html">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="./register.html">Register</a></li>
+            <li class="nav-item avatar-wrap" id="avatarNavItem" style="display: none">
+              <div class="avatar-trigger" id="avatarTrigger" role="button" tabindex="0" aria-expanded="false">
+                <span class="avatar-badge" id="avatarInitial">U</span>
+                <span class="fw-semibold d-none d-lg-inline" id="avatarName">User</span>
+              </div>
+              <div class="avatar-menu" id="avatarMenu">
+                <div class="menu-name" id="avatarMenuName">Customer</div>
+                <button type="button" id="logoutBtn">Logout</button>
+              </div>
+            </li>
           </ul>
         </div>
       </div>
@@ -96,10 +257,15 @@
           <div class="col-lg-4">
             <div class="card-soft p-4 bg-white">
               <div class="d-flex align-items-center gap-3 mb-4">
-                <div class="avatar" id="avatarInitial">U</div>
+                <div class="avatar" id="profileAvatarDisplay">U</div>
                 <div>
                   <h3 class="fw-bold mb-1" id="profileName">User</h3>
                   <p class="text-muted mb-0" id="profileEmail">email@example.com</p>
+                  <div class="d-flex flex-column gap-2 mt-2">
+                    <input type="file" class="form-control form-control-sm" id="avatarUpload" accept="image/*" />
+                    <button type="button" class="btn btn-sm btn-outline-primary" id="uploadAvatarBtn" disabled>Upload</button>
+                    <small class="text-muted">Choose an image, then click Upload to preview it before saving.</small>
+                  </div>
                 </div>
               </div>
               <div class="list-group list-group-flush">
@@ -153,51 +319,191 @@
     </footer>
 
     <script>
-      const session = JSON.parse(localStorage.getItem("novaSession") || "null");
-      const users = JSON.parse(localStorage.getItem("novaUsers") || "[]");
+      document.addEventListener("DOMContentLoaded", function () {
+        const session = JSON.parse(localStorage.getItem("novaSession") || "null");
+        const users = JSON.parse(localStorage.getItem("novaUsers") || "[]");
+        const avatarUpload = document.getElementById("avatarUpload");
+        const uploadAvatarBtn = document.getElementById("uploadAvatarBtn");
+        const profileAvatarDisplay = document.getElementById("profileAvatarDisplay");
+        const avatarNavItem = document.getElementById("avatarNavItem");
+        const avatarTrigger = document.getElementById("avatarTrigger");
+        const avatarInitial = document.getElementById("avatarInitial");
+        const avatarName = document.getElementById("avatarName");
+        const avatarMenuName = document.getElementById("avatarMenuName");
+        const avatarMenu = document.getElementById("avatarMenu");
+        const logoutBtn = document.getElementById("logoutBtn");
+        const loginLink = document.querySelector('.nav-link[href="./login.html"]');
+        const registerLink = document.querySelector('.nav-link[href="./register.html"]');
+        const profileForm = document.getElementById("profileForm");
+        const isAuthPage = /\/(login|register)\.html$/i.test(window.location.pathname);
 
-      if (!session) {
-        window.location.href = "login.html";
-      }
+        if (!session || !session.email) {
+          window.location.href = "./login.html";
+          return;
+        }
 
-      const currentUser = users.find((user) => user.email === session.email) || null;
+        let currentUser = users.find((user) => user.email === session.email) || null;
 
-      if (!currentUser) {
-        window.location.href = "login.html";
-      }
+        if (!currentUser) {
+          window.location.href = "./login.html";
+          return;
+        }
 
-      document.getElementById("profileName").textContent = currentUser.name;
-      document.getElementById("profileEmail").textContent = currentUser.email;
-      document.getElementById("avatarInitial").textContent = currentUser.name.charAt(0).toUpperCase();
+        let selectedAvatarFile = null;
+        let previewAvatar = currentUser.avatar || null;
 
-      document.getElementById("name").value = currentUser.name;
-      document.getElementById("phone").value = currentUser.phone || "";
-      document.getElementById("email").value = currentUser.email;
-      document.getElementById("address").value = currentUser.address || "";
+        function renderAvatarElement(element, avatarValue, fallbackText) {
+          if (!element) return;
+          element.innerHTML = "";
 
-      document.getElementById("backButton").addEventListener("click", function () {
-        window.location.href = "index.html";
-      });
+          if (avatarValue && typeof avatarValue === "string" && avatarValue.startsWith("data:image")) {
+            const img = document.createElement("img");
+            img.src = avatarValue;
+            img.alt = "User avatar";
+            img.className = "avatar-image";
+            element.appendChild(img);
+          } else {
+            element.textContent = avatarValue || fallbackText || "U";
+          }
+        }
 
-      document.getElementById("profileForm").addEventListener("submit", function (event) {
-        event.preventDefault();
+        function updateAvatarMenu() {
+          const sessionData = JSON.parse(localStorage.getItem("novaSession") || "null");
 
-        const updatedUser = {
-          ...currentUser,
-          name: document.getElementById("name").value.trim(),
-          phone: document.getElementById("phone").value.trim(),
-          email: document.getElementById("email").value.trim(),
-          address: document.getElementById("address").value.trim()
-        };
+          if (!sessionData || isAuthPage) {
+            avatarNavItem.style.display = "none";
+            if (loginLink) loginLink.parentElement.style.display = "block";
+            if (registerLink) registerLink.parentElement.style.display = "block";
+            return;
+          }
 
-        const updatedUsers = users.map((user) => (user.email === currentUser.email ? updatedUser : user));
-        localStorage.setItem("novaUsers", JSON.stringify(updatedUsers));
-        localStorage.setItem("novaSession", JSON.stringify({ name: updatedUser.name, email: updatedUser.email }));
+          const fullName = sessionData.name || sessionData.email?.split("@")[0] || "Customer";
+          const avatarValue = sessionData.avatar || (sessionData.name ? sessionData.name.charAt(0).toUpperCase() : "U");
+          renderAvatarElement(avatarInitial, avatarValue, "U");
+          avatarName.textContent = fullName;
+          avatarMenuName.textContent = fullName;
+          renderAvatarElement(profileAvatarDisplay, avatarValue, fullName.charAt(0).toUpperCase());
+          avatarNavItem.style.display = "flex";
 
-        document.getElementById("profileName").textContent = updatedUser.name;
-        document.getElementById("profileEmail").textContent = updatedUser.email;
-        document.getElementById("avatarInitial").textContent = updatedUser.name.charAt(0).toUpperCase();
-        alert("Profile updated successfully.");
+          if (loginLink) loginLink.parentElement.style.display = "none";
+          if (registerLink) registerLink.parentElement.style.display = "none";
+        }
+
+        function toggleAvatarMenu() {
+          const isOpen = avatarMenu.classList.toggle("show");
+          avatarTrigger.setAttribute("aria-expanded", String(isOpen));
+        }
+
+        function loadProfile() {
+          document.getElementById("profileName").textContent = currentUser.name;
+          document.getElementById("profileEmail").textContent = currentUser.email;
+          document.getElementById("name").value = currentUser.name;
+          document.getElementById("phone").value = currentUser.phone || "";
+          document.getElementById("email").value = currentUser.email;
+          document.getElementById("address").value = currentUser.address || "";
+          renderAvatarElement(profileAvatarDisplay, previewAvatar, currentUser.name.charAt(0).toUpperCase());
+        }
+
+        avatarUpload.addEventListener("change", function () {
+          const file = this.files[0];
+          if (!file) {
+            selectedAvatarFile = null;
+            uploadAvatarBtn.disabled = true;
+            return;
+          }
+
+          selectedAvatarFile = file;
+          uploadAvatarBtn.disabled = false;
+        });
+
+        uploadAvatarBtn.addEventListener("click", function () {
+          if (!selectedAvatarFile) return;
+
+          const reader = new FileReader();
+          reader.onload = function (event) {
+            previewAvatar = event.target.result;
+            renderAvatarElement(profileAvatarDisplay, previewAvatar, currentUser.name.charAt(0).toUpperCase());
+          };
+          reader.readAsDataURL(selectedAvatarFile);
+        });
+
+        document.getElementById("backButton").addEventListener("click", function () {
+          window.location.href = "./index.html";
+        });
+
+        if (avatarTrigger) {
+          avatarTrigger.addEventListener("click", toggleAvatarMenu);
+          avatarTrigger.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              toggleAvatarMenu();
+            }
+          });
+        }
+
+        document.addEventListener("click", (event) => {
+          if (!avatarNavItem.contains(event.target)) {
+            avatarMenu.classList.remove("show");
+            avatarTrigger.setAttribute("aria-expanded", "false");
+          }
+        });
+
+        if (logoutBtn) {
+          logoutBtn.addEventListener("click", () => {
+            localStorage.removeItem("novaSession");
+            window.location.href = "./login.html";
+          });
+        }
+
+        updateAvatarMenu();
+        loadProfile();
+
+        window.addEventListener("pageshow", function () {
+          updateAvatarMenu();
+          const sessionData = JSON.parse(localStorage.getItem("novaSession") || "null");
+          if (!sessionData || !sessionData.email) {
+            window.location.href = "./login.html";
+          }
+        });
+
+        if (profileForm) {
+          profileForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            currentUser = {
+              ...currentUser,
+              name: document.getElementById("name").value.trim(),
+              phone: document.getElementById("phone").value.trim(),
+              email: document.getElementById("email").value.trim(),
+              address: document.getElementById("address").value.trim(),
+              avatar: previewAvatar || currentUser.avatar || null,
+              password: currentUser.password
+            };
+
+            const updatedUsers = users.map((user) => {
+              if (user.email === session.email) {
+                return currentUser;
+              }
+              return user;
+            });
+
+            localStorage.setItem("novaUsers", JSON.stringify(updatedUsers));
+            localStorage.setItem("novaSession", JSON.stringify({
+              name: currentUser.name,
+              email: currentUser.email,
+              avatar: currentUser.avatar || null
+            }));
+
+            loadProfile();
+            updateAvatarMenu();
+            uploadAvatarBtn.disabled = true;
+            selectedAvatarFile = null;
+            alert("Profile saved successfully.");
+          });
+        }
+
+        updateAvatarMenu();
+        loadProfile();
       });
     </script>
   </body>

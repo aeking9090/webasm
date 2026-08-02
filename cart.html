@@ -44,6 +44,92 @@
         border: none;
       }
 
+      .avatar-wrap {
+        position: relative;
+      }
+
+      .avatar-trigger {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.65rem;
+        padding: 0.4rem 0.7rem;
+        border-radius: 999px;
+        background: rgba(91, 92, 246, 0.1);
+        border: 1px solid rgba(91, 92, 246, 0.14);
+        color: var(--primary);
+        cursor: pointer;
+        min-width: 150px;
+      }
+
+      .avatar-badge {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        font-weight: 700;
+        flex-shrink: 0;
+        overflow: hidden;
+      }
+
+      .avatar-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+      }
+
+      .avatar-menu {
+        position: absolute;
+        top: calc(100% + 0.5rem);
+        right: 0;
+        min-width: 190px;
+        background: #fff;
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        border-radius: 1rem;
+        box-shadow: 0 14px 36px rgba(15, 23, 42, 0.12);
+        padding: 0.6rem;
+        display: none;
+        z-index: 1200;
+        max-height: 180px;
+        overflow-y: auto;
+      }
+
+      .avatar-menu.show {
+        display: block;
+      }
+
+      .avatar-menu .menu-name {
+        font-weight: 700;
+        padding: 0.4rem 0.5rem 0.65rem;
+        border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+        margin-bottom: 0.4rem;
+      }
+
+      .avatar-menu button {
+        width: 100%;
+        text-align: left;
+        border: none;
+        background: transparent;
+        color: #dc2626;
+        padding: 0.55rem 0.5rem;
+        border-radius: 0.65rem;
+        font-weight: 600;
+      }
+
+      .avatar-menu button:hover {
+        background: rgba(220, 38, 38, 0.08);
+      }
+
+      .customer-card {
+        border: 1px solid rgba(15, 23, 42, 0.06);
+        border-radius: 1.2rem;
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
+      }
+
       .footer {
         background: #0f172a;
         color: #cbd5e1;
@@ -77,9 +163,19 @@
             <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
             <li class="nav-item"><a class="nav-link active" href="cart.html">Cart</a></li>
             <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-            <li class="nav-item"><a class="nav-link" href="profile.html">Profile</a></li>
-            <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
-            <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
+            <li class="nav-item"><a class="nav-link" href="./profile.html">Profile</a></li>
+            <li class="nav-item"><a class="nav-link" href="./login.html">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="./register.html">Register</a></li>
+            <li class="nav-item avatar-wrap" id="avatarNavItem" style="display: none">
+              <div class="avatar-trigger" id="avatarTrigger" role="button" tabindex="0" aria-expanded="false">
+                <span class="avatar-badge" id="avatarInitial">U</span>
+                <span class="fw-semibold d-none d-lg-inline" id="avatarName">User</span>
+              </div>
+              <div class="avatar-menu" id="avatarMenu">
+                <div class="menu-name" id="avatarMenuName">Customer</div>
+                <button type="button" id="logoutBtn">Logout</button>
+              </div>
+            </li>
           </ul>
         </div>
       </div>
@@ -100,6 +196,16 @@
             <div class="card-soft p-4 bg-white" id="cartItems"></div>
           </div>
           <div class="col-lg-4">
+            <div class="card-soft p-4 bg-white mb-3" id="customerCard" style="display: none">
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <div class="avatar-badge" id="customerAvatarInitial">U</div>
+                <div>
+                  <div class="fw-bold" id="customerName">Customer</div>
+                  <small class="text-muted">Signed in</small>
+                </div>
+              </div>
+              <button class="btn btn-outline-danger btn-sm w-100" id="customerLogoutBtn">Logout</button>
+            </div>
             <div class="card-soft p-4 bg-white">
               <h4 class="fw-bold mb-4">Order Summary</h4>
               <div class="d-flex justify-content-between mb-2">
@@ -135,6 +241,20 @@
       const totalEl = document.getElementById("total");
       const clearCartBtn = document.getElementById("clearCartBtn");
       const checkoutBtn = document.getElementById("checkoutBtn");
+      const avatarNavItem = document.getElementById("avatarNavItem");
+      const avatarTrigger = document.getElementById("avatarTrigger");
+      const avatarInitial = document.getElementById("avatarInitial");
+      const avatarName = document.getElementById("avatarName");
+      const avatarMenuName = document.getElementById("avatarMenuName");
+      const avatarMenu = document.getElementById("avatarMenu");
+      const logoutBtn = document.getElementById("logoutBtn");
+      const customerCard = document.getElementById("customerCard");
+      const customerName = document.getElementById("customerName");
+      const customerAvatarInitial = document.getElementById("customerAvatarInitial");
+      const customerLogoutBtn = document.getElementById("customerLogoutBtn");
+      const loginLink = document.querySelector('.nav-link[href="./login.html"]');
+      const registerLink = document.querySelector('.nav-link[href="./register.html"]');
+      const isAuthPage = /\/(login|register)\.html$/i.test(window.location.pathname);
 
       function getCart() {
         return JSON.parse(localStorage.getItem("novaCart") || "[]");
@@ -142,6 +262,11 @@
 
       function saveCart(cart) {
         localStorage.setItem("novaCart", JSON.stringify(cart));
+      }
+
+      function isCustomerLoggedIn() {
+        const session = JSON.parse(localStorage.getItem("novaSession") || "null");
+        return Boolean(session && session.email);
       }
 
       function renderCart() {
@@ -194,6 +319,51 @@
         totalEl.textContent = `$${total.toFixed(2)}`;
       }
 
+      function renderAvatarElement(element, avatarValue, fallbackText) {
+        if (!element) return;
+        element.innerHTML = "";
+
+        if (avatarValue && typeof avatarValue === "string" && avatarValue.startsWith("data:image")) {
+          const img = document.createElement("img");
+          img.src = avatarValue;
+          img.alt = "User avatar";
+          img.className = "avatar-image";
+          element.appendChild(img);
+        } else {
+          element.textContent = avatarValue || fallbackText || "U";
+        }
+      }
+
+      function updateAvatarMenu() {
+        const session = JSON.parse(localStorage.getItem("novaSession") || "null");
+
+        if (!session || isAuthPage) {
+          avatarNavItem.style.display = "none";
+          customerCard.style.display = "none";
+          if (loginLink) loginLink.parentElement.style.display = "block";
+          if (registerLink) registerLink.parentElement.style.display = "block";
+          return;
+        }
+
+        const fullName = session.name || session.email?.split("@")[0] || "Customer";
+        const avatarValue = session.avatar || (session.name ? session.name.charAt(0).toUpperCase() : "U");
+        renderAvatarElement(avatarInitial, avatarValue, "U");
+        avatarName.textContent = fullName;
+        avatarMenuName.textContent = fullName;
+        customerName.textContent = fullName;
+        renderAvatarElement(customerAvatarInitial, avatarValue, "U");
+        avatarNavItem.style.display = "flex";
+        customerCard.style.display = "block";
+
+        if (loginLink) loginLink.parentElement.style.display = "none";
+        if (registerLink) registerLink.parentElement.style.display = "none";
+      }
+
+      function toggleAvatarMenu() {
+        const isOpen = avatarMenu.classList.toggle("show");
+        avatarTrigger.setAttribute("aria-expanded", String(isOpen));
+      }
+
       cartItemsContainer.addEventListener("click", function (event) {
         const button = event.target.closest("button");
         if (!button) return;
@@ -234,16 +404,62 @@
       });
 
       checkoutBtn.addEventListener("click", function () {
-        if (getCart().length === 0) {
+        const cart = getCart();
+
+        if (cart.length === 0) {
           alert("Your cart is empty.");
           return;
         }
+
+        if (!isCustomerLoggedIn()) {
+          alert("Please log in before checkout.");
+          window.location.href = "./login.html";
+          return;
+        }
+
         saveCart([]);
         renderCart();
         alert("Checkout complete! Thank you for shopping with NovaCart.");
       });
 
+      if (avatarTrigger) {
+        avatarTrigger.addEventListener("click", toggleAvatarMenu);
+        avatarTrigger.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            toggleAvatarMenu();
+          }
+        });
+      }
+
+      document.addEventListener("click", (event) => {
+        if (!avatarNavItem.contains(event.target)) {
+          avatarMenu.classList.remove("show");
+          avatarTrigger.setAttribute("aria-expanded", "false");
+        }
+      });
+
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+          localStorage.removeItem("novaSession");
+          window.location.href = "./login.html";
+        });
+      }
+
+      if (customerLogoutBtn) {
+        customerLogoutBtn.addEventListener("click", () => {
+          localStorage.removeItem("novaSession");
+          window.location.href = "./login.html";
+        });
+      }
+
+      updateAvatarMenu();
       renderCart();
+
+      window.addEventListener("pageshow", function () {
+        updateAvatarMenu();
+        renderCart();
+      });
     </script>
   </body>
 </html>
