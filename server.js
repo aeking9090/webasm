@@ -12,7 +12,7 @@ const products = [
     id: 1,
     name: 'Aero Jacket',
     price: 1290000,
-    image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=900&q=80',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgH7xw9hqQYy2WOUuLPdfcLL3sqBwvVTuMszArBa7RVYtozQvVd3pBW_o&s=10',
     tag: 'Best Seller',
     description: 'Modern, lightweight comfort with elevated craftsmanship.'
   },
@@ -20,7 +20,7 @@ const products = [
     id: 2,
     name: 'Lumen Briefcase',
     price: 840000,
-    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80',
+    image: 'https://m.media-amazon.com/images/I/61+7sxOq88L._AC_UY1000_.jpg',
     tag: 'Trending',
     description: 'A polished everyday carrier with premium finishes.'
   },
@@ -42,9 +42,33 @@ const products = [
   },
   {
     id: 5,
+    name: 'Chroma Bomber',
+    price: 1390000,
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMnxZI8ewSxv-du00aF4AFQ6KSR0oBrIn-17ml2zGprC_r1FINZyD1xPcx&s=10',
+    tag: 'Men\'s Outerwear',
+    description: 'A bold bomber jacket in rich tones with structured comfort.'
+  },
+  {
+    id: 6,
+    name: 'Vanguard Belt',
+    price: 450000,
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIZo_Jry8R0uwiojvNn4qG4OHV64BfC12x3qOD-d6LGj0hq9YtmMwpY64&s=10',
+    tag: 'Accessories',
+    description: 'An essential leather belt with brushed hardware and tailored style.'
+  },
+  {
+    id: 7,
+    name: 'Metro Chinos',
+    price: 880000,
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsHoohO20zgOq14Uon5EO2e042h4nAuS-Kz1hVQDzb4LOGZ8PZODxV5PE&s=10',
+    tag: 'Smart Casual',
+    description: 'Tailored chinos in a versatile colorway that transitions easily.'
+  },
+  {
+    id: 8,
     name: 'Apex Trainers',
     price: 1090000,
-    image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80',
+    image: 'https://truefitness.com/wp-content/uploads/2025/08/XC1-XA-35-Apex-Cross-Trainer-rear-3_4-16in_960.png',
     tag: 'Performance',
     description: 'Lightweight trainers built for energy, comfort, and everyday motion.'
   }
