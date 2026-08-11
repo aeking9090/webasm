@@ -256,12 +256,25 @@
       const registerLink = document.querySelector('.nav-link[href="./register.html"]');
       const isAuthPage = /\/(login|register)\.html$/i.test(window.location.pathname);
 
+      function getCurrentUserEmail() {
+        const session = JSON.parse(localStorage.getItem("novaSession") || "null");
+        return session?.email || "";
+      }
+
+      function getCartStorageKey() {
+        const email = getCurrentUserEmail();
+        return email ? `novaCart-${email}` : "novaCart-guest";
+      }
+
       function getCart() {
-        return JSON.parse(localStorage.getItem("novaCart") || "[]");
+        const cartKey = getCartStorageKey();
+        const cart = JSON.parse(localStorage.getItem(cartKey) || "[]");
+        return Array.isArray(cart) ? cart : [];
       }
 
       function saveCart(cart) {
-        localStorage.setItem("novaCart", JSON.stringify(cart));
+        const cartKey = getCartStorageKey();
+        localStorage.setItem(cartKey, JSON.stringify(cart));
       }
 
       function isCustomerLoggedIn() {
