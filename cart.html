@@ -229,11 +229,31 @@
     </main>
 
     <footer class="footer py-4 mt-5">
-      <div class="container text-center">
-        <p class="mb-0">© 2026 NovaCart. All rights reserved.</p>
+      <div class="container">
+        <div class="row g-4 align-items-center">
+          <div class="col-md-4">
+            <h5 class="fw-bold text-white">NovaCart</h5>
+            <p class="text-secondary mb-0">A modern e-commerce experience built for effortless shopping.</p>
+          </div>
+          <div class="col-md-4">
+            <h6 class="text-white">Quick Links</h6>
+            <ul class="list-unstyled mb-0">
+              <li><a class="text-secondary text-decoration-none" href="index.html">Home</a></li>
+              <li><a class="text-secondary text-decoration-none" href="cart.html">Cart</a></li>
+              <li><a class="text-secondary text-decoration-none" href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h6 class="text-white">Contact</h6>
+            <p class="mb-1 text-secondary" data-contact="email">wjbu007@gmail.com</p>
+            <p class="mb-1 text-secondary" data-contact="phone">+84 xxx-xxxx</p>
+            <p class="mb-0 text-secondary" data-contact="address">Đ. Số 3, Trung Mỹ Tây, Hồ Chí Minh</p>
+          </div>
+        </div>
       </div>
     </footer>
 
+    <script src="./store-config.js"></script>
     <script>
       const cartItemsContainer = document.getElementById("cartItems");
       const subtotalEl = document.getElementById("subtotal");
