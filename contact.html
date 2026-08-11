@@ -191,7 +191,7 @@
                 </div>
                 <div class="col-md-6">
                   <label class="form-label">Phone</label>
-                  <input type="tel" class="form-control" id="phone" />
+                  <input type="tel" class="form-control" id="phone" required />
                 </div>
                 <div class="col-md-6">
                   <label class="form-label">Topic</label>
@@ -280,6 +280,9 @@
     <script src="./store-config.js"></script>
     <script>
       const form = document.getElementById("contactForm");
+      const emailInput = document.getElementById("email");
+      const phoneInput = document.getElementById("phone");
+      const messageInput = document.getElementById("message");
       const toastContainer = document.querySelector(".toast-container");
       const avatarNavItem = document.getElementById("avatarNavItem");
       const avatarTrigger = document.getElementById("avatarTrigger");
@@ -291,6 +294,27 @@
       const loginLink = document.querySelector('.nav-link[href="./login.html"]');
       const registerLink = document.querySelector('.nav-link[href="./register.html"]');
       const isAuthPage = /\/(login|register)\.html$/i.test(window.location.pathname);
+
+      function validateEmailFormat(email) {
+        if (!email) {
+          return "Please enter your email address.";
+        }
+
+        if (!email.includes("@")) {
+          return "Please enter a valid email address. Missing @.";
+        }
+
+        if (!email.includes(".")) {
+          return "Please enter a valid email address. Missing .";
+        }
+
+        const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        if (!isValid) {
+          return "Please enter a valid email address.";
+        }
+
+        return "";
+      }
 
       function renderAvatarElement(element, avatarValue, fallbackText) {
         if (!element) return;
@@ -378,12 +402,34 @@
       form.addEventListener("submit", function (event) {
         event.preventDefault();
 
+        const name = document.getElementById("name").value.trim();
+        const email = emailInput.value.trim();
+        const phone = phoneInput.value.trim();
+        const topic = document.getElementById("topic").value;
+        const message = messageInput.value.trim();
+
+        if (!name || !email || !phone || !message) {
+          showToast("Please fill in all required contact fields.");
+          return;
+        }
+
+        const emailError = validateEmailFormat(email);
+        if (emailError) {
+          showToast(emailError);
+          return;
+        }
+
+        if (phone.length === 0) {
+          showToast("Please enter your phone number.");
+          return;
+        }
+
         const inquiry = {
-          name: document.getElementById("name").value.trim(),
-          email: document.getElementById("email").value.trim(),
-          phone: document.getElementById("phone").value.trim(),
-          topic: document.getElementById("topic").value,
-          message: document.getElementById("message").value.trim(),
+          name,
+          email,
+          phone,
+          topic,
+          message,
           createdAt: new Date().toISOString()
         };
 
